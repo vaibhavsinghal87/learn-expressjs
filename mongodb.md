@@ -14,6 +14,7 @@
 - `db.products.updateOne({price: 10}, {$set: {description: "good read"}})` -  _$set_ is required here. Without _$set_ error will be thrown.
 - `db.products.updateMany({}, {$set: {description: "good read"}})` - _$set_ is required here. Without _$set_ error will be thrown.
 - `db.products.insertMany([{name: "A shirt", price: 20}, {name: "A bag", price: 30}])` - Array of json documents. Mongodb maintains the _order_ here.
+- `db.products.deleteMany({})` - Delete all documents in the collection.
 - `db.products.find({price: {$gt: 10}})` - Find documents whose price is greater than 10.
 - `db.products.findOne({price: {$gt: 10}})`
 - `db.products.find().toArray()` - Mongodb returns first 20 documents when plain find query is executed. _toArray()_ forces find() to fetch all documents and will not stop at first 20 documents. Not optimal if there are a lot of documents.
@@ -25,13 +26,15 @@
 - `db.dropDatabase` - Deletes the current database.
 - `db.collectionName.drop()` - Deletes the collection by name "collectionName".
 
-
-
 Collection is equivalent to tables in structured DB.  
 Cursor doesn't exists for insert, update and delete methods.  
 Embedded Documents - Document inside Document. Can have upto 100 level of nesting. Arrays can also be present in nested documents.  
 Use filters and operators to limit the number of Documents retrieved.  
 Filters allow you to restrict the amount of documents and Projection then allows to restrict fields per Document.  
+
+## Schemas and Relations - 
+
+
 
 ## Refs
 - [Mongodb Cursor methods](https://www.mongodb.com/docs/v4.2/reference/method/db.collection.find/#available-mongo-shell-cursor-methods)

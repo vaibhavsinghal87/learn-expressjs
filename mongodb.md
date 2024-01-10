@@ -41,6 +41,9 @@ Filters allow you to restrict the amount of documents and Projection then allows
 - `Many to Many - Embedded document` - Ex. Customers/Orders relationship. Many to Many relationship is modelled often using References.
 - `Many to Many - Using References` - Ex. Books/Author relationship. 
 
+_$lookup_ allows you to fetch two related documents and merge them in one document in one step instead of two steps. This mitigates some of the disadvantages of splitting documents across collections because now you can merge them in one go. This should not be used always since this is performance intensive operation.
+
+
 ### Deciding Factors - 
 - How do you fetch your data?
 - How often do you change it and if you change it do you need to change it everywhere?

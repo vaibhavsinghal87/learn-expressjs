@@ -2,15 +2,15 @@
 
 # Summary of udemy course by [Maximilian Schwarzmüller](https://www.udemy.com/course/mongodb-the-complete-developers-guide/#instructor-2)
 
-## Mongodb Storage Engine - Wired Tiger
+## MongoDB Storage Engine - Wired Tiger
 ![Storage Engine](./mongodb-storage-engine.png)
 
-## Mongodb shell commands - 
+## MongoDB shell commands - 
 
 - `show dbs`
 - `use shop` - creates databse if it doesn't already exists
 - `db.products.insertOne({name: "A book", price: 10})` - creates collection if it doesn't already exists
-- `db.products.find()` - retrieves first 20 documents inside collection products. Doesn't returns all the documents. Instead returns a cursor when documents are more than 20. Cursor - Type "it" for more.
+- `db.products.find()` - retrieves first 20 documents inside "products" collection. Doesn't returns all the documents. Instead returns a cursor when documents are more than 20. Cursor - Type "it" for more.
 - `db.products.updateOne({price: 10}, {$set: {description: "good read"}})` -  _$set_ is required here. Without _$set_ error will be thrown.
 - `db.products.updateMany({}, {$set: {description: "good read"}})` - _$set_ is required here. Without _$set_ error will be thrown.
 - `db.products.insertMany([{name: "A shirt", price: 20}, {name: "A bag", price: 30}])` - Array of json documents. Mongodb maintains the _order_ here.
@@ -25,6 +25,7 @@
 - `db.products.find({"status.description": "on-time"})` - Querying nested Documents/Objects - returns the Document that match the nested query. Dot notation allows to look into Embedded Documents.
 - `db.dropDatabase` - Deletes the current database.
 - `db.collectionName.drop()` - Deletes the collection by name "collectionName".
+- `typeof db.products.findOne({price: 30}).name` - returns Data type of the value
 
 Collection is equivalent to tables in structured DB.  
 Cursor doesn't exists for insert, update and delete methods.  
@@ -37,5 +38,9 @@ Filters allow you to restrict the amount of documents and Projection then allows
 
 
 ## Refs
-- [Mongodb Cursor methods](https://www.mongodb.com/docs/v4.2/reference/method/db.collection.find/#available-mongo-shell-cursor-methods)
-- [Mongodb Collection methods](https://www.mongodb.com/docs/v4.2/reference/method/js-collection/#collection-methods)
+- [MongoDB Documentation](https://www.mongodb.com/docs/)
+- [MongoDB Drivers](https://www.mongodb.com/docs/drivers/)
+- [MongoDB official Nodejs driver](https://www.npmjs.com/package/mongodb)
+- [MongoDB Shell](https://www.mongodb.com/docs/mongodb-shell/)
+- [MongoDB Shell Methods](https://www.mongodb.com/docs/mongodb-shell/reference/methods/)
+- [MongoDB Data Types](https://www.mongodb.com/docs/manual/reference/bson-types/)

@@ -33,6 +33,7 @@ Embedded documents - Document inside Document. Can have upto 100 level of nestin
 Use filters and operators to limit the number of documents retrieved.  
 Filters allow you to restrict the amount of documents and Projection then allows to restrict fields per document.  
 
+---
 ## Schemas and Relations - 
 - `One to One - Embedded document` - Used when there is a strong relationship. 
 - `One to One - Using References` - Used when there is not a strong relationship.
@@ -41,14 +42,33 @@ Filters allow you to restrict the amount of documents and Projection then allows
 - `Many to Many - Embedded document` - Ex. Customers/Orders relationship. Many to Many relationship is modelled often using References.
 - `Many to Many - Using References` - Ex. Books/Author relationship. 
 
-_$lookup_ allows you to fetch two related documents and merge them in one document in one step instead of two steps. This mitigates some of the disadvantages of splitting documents across collections because now you can merge them in one go. This should not be used always since this is performance intensive operation.
-
+_$lookup_ allows you to fetch two related documents and merge them in one document in one step instead of two steps. This mitigates some of the disadvantages of splitting documents across collections because now you can merge them in one go. This should not be used always since this is performance intensive operation.  
+Schema Validation - Validates if values inserted/updated meet the schema criteria.
 
 ### Deciding Factors - 
 - How do you fetch your data?
 - How often do you change it and if you change it do you need to change it everywhere?
 - Is duplicating data fine?
 - If we need latest data all the time(Ex. age of the person should be current age), use References to establish relationship.
+
+---
+
+## Create operation - 
+
+- `Ordered Inserts` - Every element that is inserted is processed standalone, but if one fails it cancels the entire insert operation, but it doesn't rollback the elements it already inserted. To override this default MongoDB behaviour, we can pass `{ordered: false}` in the insert operation as second parameter.
+```js
+db.hobbies.insertMany([{_id: "sports", name: "Sports"}, {_id: "cooking", name: "Cooking"}, {_id: "cars", name: "Cars"}])
+db.hobbies.find()
+db.hobbies.insertMany([{_id: "yoga", name: "Yoga"}, {_id: "cooking", name: "Cooking"}, {_id: "hiking", name: "Hiking"}])
+db.hobbies.find()
+db.hobbies.insertMany([{_id: "yoga", name: "Yoga"}, {_id: "cooking", name: "Cooking"}, {_id: "hiking", name: "Hiking"}], {ordered: false})
+db.hobbies.find()
+```
+Command will fail while executing second insert. This is default behaviour of MongoDB which is called Ordered Inserts.  
+By setting `{ordered: false}` we can change the default behaviour. Though it still throws an error but it also inserts the last element.
+- `writeConcern` -   
+![writeConcern](./writeConcern-in-MongoDB.png)
+---
 
 ## Refs
 - [MongoDB Documentation](https://www.mongodb.com/docs/)

@@ -67,7 +67,20 @@ db.hobbies.find()
 Command will fail while executing second insert. This is default behaviour of MongoDB which is called Ordered Inserts.  
 By setting `{ordered: false}` we can change the default behaviour. Though it still throws an error but it also inserts the last element.
 - `writeConcern` -   
-![writeConcern](./writeConcern-in-MongoDB.png)
+![writeConcern](./writeConcern-in-MongoDB.png)  
+```js
+db.persons.insertOne({name: "Chrissy", age: 41}, {writeConcern: {w: 0}})
+db.persons.insertOne({name: "Michael", age: 51}, {writeConcern: {w: 1, j: true}})
+db.persons.insertOne({name: "Aliya", age: 22}, {writeConcern: {w: 1, j: true, wtimeout: 1}})
+```
+Storage Engine is responsible for writing data in disk and also managing data in memory.  
+Write operation first ends up in memory but it is also scheduled to be written on disk.  
+We can configure a writeConcern for all write operations.  
+j stands for journal which is an additional file that Storage Engine manages which is like a todo file. The journal can be kept to save operations that a Storage Engine needs to do that have not been completed yet, like the write. The idea of the journal file which is a real file on disk is that if the server goes down for any reason that file is still there. So that when the server restarts it can look into that file and see what it needs to do. Writing into databse files is more heavy than writing in journal. Enabling the journal configuration will result in writes taking longer.
+
+- `Atomicity` - MongoDB CRUD operations are atomic on the Document Level.
+
+- `Importing Data` - json files can be imported in MongoDB with _mongoimport_ command.
 ---
 
 ## Refs

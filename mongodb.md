@@ -5,7 +5,9 @@
 ## MongoDB Storage Engine - Wired Tiger
 ![Storage Engine](./mongodb-storage-engine.png)
 
-## MongoDB shell commands - 
+--- 
+
+## MongoDB shell commands -
 
 - `show dbs`
 - `use shop` - creates databse if it doesn't already exists
@@ -34,6 +36,7 @@ Use filters and operators to limit the number of documents retrieved.
 Filters allow you to restrict the amount of documents and Projection then allows to restrict fields per document.  
 
 ---
+
 ## Schemas and Relations - 
 - `One to One - Embedded document` - Used when there is a strong relationship. 
 - `One to One - Using References` - Used when there is not a strong relationship.
@@ -53,7 +56,7 @@ Schema Validation - Validates if values inserted/updated meet the schema criteri
 
 ---
 
-## Create operation - 
+## Create Operations - 
 
 - `Ordered Inserts` - Every element that is inserted is processed standalone, but if one fails it cancels the entire insert operation, but it doesn't rollback the elements it already inserted. To override this default MongoDB behaviour, we can pass `{ordered: false}` in the insert operation as second parameter.
 ```js
@@ -67,7 +70,7 @@ db.hobbies.find()
 Command will fail while executing second insert. This is default behaviour of MongoDB which is called Ordered Inserts.  
 By setting `{ordered: false}` we can change the default behaviour. Though it still throws an error but it also inserts the last element.
 - `writeConcern` -   
-![writeConcern](./writeConcern-in-MongoDB.png)  
+![writeConcern](./mongodb-writeConcern.png)  
 ```js
 db.persons.insertOne({name: "Chrissy", age: 41}, {writeConcern: {w: 0}})
 db.persons.insertOne({name: "Michael", age: 51}, {writeConcern: {w: 1, j: true}})
@@ -81,9 +84,17 @@ j stands for journal which is an additional file that Storage Engine manages whi
 - `Atomicity` - MongoDB CRUD operations are atomic on the Document Level.
 
 - `Importing Data` - json files can be imported in MongoDB with _mongoimport_ command.
+
 ---
 
-## Refs
+## Read Operations - 
+
+- `Methods, Filters & Operators` -  
+![Methods, Filters and Operators](./mongodb-filters-operators.png) 
+
+---
+
+## References
 - [MongoDB Documentation](https://www.mongodb.com/docs/)
 - [MongoDB Drivers](https://www.mongodb.com/docs/drivers/)
 - [MongoDB official Nodejs driver](https://www.npmjs.com/package/mongodb)

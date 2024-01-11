@@ -101,3 +101,4 @@ j stands for journal which is an additional file that Storage Engine manages whi
 - [MongoDB Shell](https://www.mongodb.com/docs/mongodb-shell/)
 - [MongoDB Shell Methods](https://www.mongodb.com/docs/mongodb-shell/reference/methods/)
 - [MongoDB Data Types](https://www.mongodb.com/docs/manual/reference/bson-types/)
+- [MongoDB - The Complete Developer's Guide](https://documentation.peelmicro.info/databases/mongodb-mongodb-the-complete-developers-guide.html)

@@ -92,6 +92,34 @@ j stands for journal which is an additional file that Storage Engine manages whi
 - `Methods, Filters & Operators` -  
 ![Methods, Filters and Operators](./mongodb-filters-operators.png) 
 
+- `Types of Operators` - 
+    - Query and Projection (Query Selectors, Projection Operators)
+    - Update (Fields, Arrays)
+    - Aggregation (Pipeline Stages, Pipeline Operators)
+
+### Query Selectors and Projection Operators    
+![Query Selectors and Projection Operators](./mongodb-operators.png)  
+
+- `find()` and `findOne()` uses equality to filter the results.
+- Comparison Operators - 
+    - `db.movies.find({runtime: {$eq: 60}})` - Equivalent to _find()_ and _findOne()_
+    - `db.movies.find({runtime: {$ne: 60}})` - Not Equal Operator
+    - `db.movies.find({runtime: {$lt: 40}})` - Lower than Operator
+    - `db.movies.find({runtime: {$lte: 40}})` - Lower than equal Operator
+    - `db.movies.find({runtime: {$gt: 40}})` - Greater than Operator
+    - `db.movies.find({runtime: {$gte: 40}})` - Greater than equal Operator
+    - `db.movies.find({runtime: {$in: [30, 42]}})` - Find all movies that have runtime equal to [30, 42].
+    - `db.movies.find({runtime: {$nin: [30, 42]}})` - Find all movies that don't have runtime of [30, 42].
+
+- Querying Embedded Fields and Arrays - 
+    - `db.moview.find({"rating.average": {$gt: 7}})` - Query an Object
+    - `db.moview.find({genres: "Drama"})` - Query an Array. genres is an array.
+    - `db.moview.find({genres: [Drama]})` - Exact equality to an Array. genres array has only one value. genres: ["Drama"].
+
+- Logical Operators - 
+    - 
+
+
 ---
 
 ## References
@@ -101,4 +129,5 @@ j stands for journal which is an additional file that Storage Engine manages whi
 - [MongoDB Shell](https://www.mongodb.com/docs/mongodb-shell/)
 - [MongoDB Shell Methods](https://www.mongodb.com/docs/mongodb-shell/reference/methods/)
 - [MongoDB Data Types](https://www.mongodb.com/docs/manual/reference/bson-types/)
+- [MongoDB Operators](https://www.mongodb.com/docs/manual/reference/operator/query/)
 - [MongoDB - The Complete Developer's Guide](https://documentation.peelmicro.info/databases/mongodb-mongodb-the-complete-developers-guide.html)

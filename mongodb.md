@@ -3,7 +3,7 @@
 # Summary of udemy course by [Maximilian Schwarzmüller](https://www.udemy.com/course/mongodb-the-complete-developers-guide/#instructor-2)
 
 ## MongoDB Storage Engine - Wired Tiger
-![Storage Engine](./mongodb-storage-engine.png)
+![Storage Engine](./images/mongodb-storage-engine.png)
 
 --- 
 
@@ -70,7 +70,7 @@ db.hobbies.find()
 Command will fail while executing second insert. This is default behaviour of MongoDB which is called Ordered Inserts.  
 By setting `{ordered: false}` we can change the default behaviour. Though it still throws an error but it also inserts the last element.
 - `writeConcern` -   
-![writeConcern](./mongodb-writeConcern.png)  
+![writeConcern](./images/mongodb-writeConcern.png)  
 ```js
 db.persons.insertOne({name: "Chrissy", age: 41}, {writeConcern: {w: 0}})
 db.persons.insertOne({name: "Michael", age: 51}, {writeConcern: {w: 1, j: true}})
@@ -90,7 +90,7 @@ j stands for journal which is an additional file that Storage Engine manages whi
 ## Read Operations - 
 
 - `Methods, Filters & Operators` -  
-![Methods, Filters and Operators](./mongodb-filters-operators.png) 
+![Methods, Filters and Operators](./images/mongodb-filters-operators.png) 
 
 - `Types of Operators` - 
     - Query and Projection (Query Selectors, Projection Operators)
@@ -98,7 +98,7 @@ j stands for journal which is an additional file that Storage Engine manages whi
     - Aggregation (Pipeline Stages, Pipeline Operators)
 
 ### Query Selectors and Projection Operators    
-![Query Selectors and Projection Operators](./mongodb-operators.png)  
+![Query Selectors and Projection Operators](./images/mongodb-operators.png)  
 
 - `find()` and `findOne()` uses equality to filter the results.
 - Comparison Operators - 
@@ -145,6 +145,23 @@ j stands for journal which is an additional file that Storage Engine manages whi
     - `db.moviestarts.find({genres: {$all: ["action", "thriller"]}})` - Find all movies that have "genres" defined in the query. Order of "genres" doesn't matter in collection.
     - `db.users.findOne({$and: [{"hobbies.title": "Sports"}, {"hobbies.frequency": {$gte: 3}}]})`
     - `db.users.find({hobbies: {$elemMatch: {title: "Sports", frequency: {$gte: 3}}}})`
+
+### Cursors - 
+![MongoDB Cursor](./images/mongodb-cursor.png)  
+
+- const dataCursor = db.movies.find()  
+  dataCursor.next()  
+  dataCursor.forEach(doc => {printjson(doc)})  
+  dataCursor.hasNext()
+- `db.movies.find().sort({"rating.average": 1, runtime: 1})` - Sorting Cursor results
+- `db.movies.find().sort({"rating.average": 1, runtime: 1}).skip(100).limit(10)`
+
+### Projection - 
+
+- `db.movies.find({}, {name: 1, genres: 1, rating: 1})`
+- `db.movies.find({}, {name: 1, genres: 1, "rating.average": 1})` - Projection on embedded documents.
+- `db.movies.find({genres: "Drama"}, {"genres.$": 1})` - Projection on Arrays.
+- `$slice`
 
 ---
 

@@ -117,8 +117,14 @@ j stands for journal which is an additional file that Storage Engine manages whi
     - `db.moview.find({genres: [Drama]})` - Exact equality to an Array. genres array has only one value. genres: ["Drama"].
 
 - Logical Operators - 
-    - 
-
+    - `db.movies.find({$or: [{"rating.average": {$lt: 5}}, {"rating.average": {$gt: 9.3}}]})` - Finds all documents that have rating lower than 5 OR greater than 9.3. MongoDB will check multiple conditions in array.
+    - `db.movies.find({$nor: [{"rating.average": {$lt: 5}}, {"rating.average": {$gt: 9.3}}]})`
+    - `db.movies.find({$and: [{"rating.average": {$gt: 9}}, {"genres": "Drama"}]})` - _$and_ takes array of conditions as input.
+    - `db.movies.find({"rating.average": {$gt: 9}}, {"genres": "Drama"})` - This is equivalent to using _$and_ as the default behavior of _find()_ is to concatenate all conditions.
+    - `db.movies.find({"genres": "Horror"}, {"genres": "Drama"})` - Will not return correct result in JS, as same object key is encountered twice. In this case second "genres" will override first one. So results returned will contain movies with "genres" Drama only.
+    - `db.movies.find({$and: [{"genres": "Horror"}, {"genres": "Drama"}]})` - Will work perfectly fine as now we are using _$and_. If you look for values on same field, you need to use _$and_.
+    - `db.movies.find({runtime: {$not: {$eq: 60}}})` - Return movies where runtime is not equal to 60.
+    - `db.movies.find({runtime: {$ne: 60}})` - Return movies where runtime is not equal to 60. Same as above.
 
 ---
 

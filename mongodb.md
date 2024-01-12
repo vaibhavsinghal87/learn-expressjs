@@ -112,9 +112,9 @@ j stands for journal which is an additional file that Storage Engine manages whi
     - `db.movies.find({runtime: {$nin: [30, 42]}})` - Find all movies that don't have runtime of [30, 42].
 
 - Querying Embedded Fields and Arrays - 
-    - `db.moview.find({"rating.average": {$gt: 7}})` - Query an Object
-    - `db.moview.find({genres: "Drama"})` - Query an Array. genres is an array.
-    - `db.moview.find({genres: [Drama]})` - Exact equality to an Array. genres array has only one value. genres: ["Drama"].
+    - `db.movies.find({"rating.average": {$gt: 7}})` - Query an Object
+    - `db.movies.find({genres: "Drama"})` - Query an Array. genres is an array.
+    - `db.movies.find({genres: [Drama]})` - Exact equality to an Array. genres array has only one value. genres: ["Drama"].
 
 - Logical Operators - 
     - `db.movies.find({$or: [{"rating.average": {$lt: 5}}, {"rating.average": {$gt: 9.3}}]})` - Finds all documents that have rating lower than 5 OR greater than 9.3. MongoDB will check multiple conditions in array.
@@ -133,7 +133,18 @@ j stands for journal which is an additional file that Storage Engine manages whi
     - `db.users.find({phone: {$type: "number"}})`
     - `db.users.find({phone: {$type: ["double", "string"]}})`
 
+- Evaluation Operators - 
+    - `db.movies.find({summary: {$regex: /musical/}})` - Returns all documents that have "musical" in summary field. Best way to execute such operations is to use text index.
+    - `$expr`
 
+- Querying Arrays - 
+    - `db.users.insertMany([{name: "Max", hobbies: [{title: "Sports", frequency: 3},{title: "Cooking", frequency: 6}], phone: 0131782734}, {name: "Manuel", hobbies: [{title: "Cooking", frequency: 5 },{title: "Cars", frequency: 2 }], phone: "012177972", age: 30}])`
+    - `db.users.find({"hobbies.title": "Sports"})` - Path Embedded document can also be used on Arrays. MongoDB is smart enough to iterate all the hobbies and compare "title" to our query value and return the matching elements even if "hobbies" is an array. Path embedded approach can also be used on array of Embedded documents.
+    - `db.users.insertOne({name: "Chris", hobbies: ["Sports", "Cooking", "Hiking"]})`
+    - `db.users.find({hobbies: {$size: 3}})`
+    - `db.moviestarts.find({genres: {$all: ["action", "thriller"]}})` - Find all movies that have "genres" defined in the query. Order of "genres" doesn't matter in collection.
+    - `db.users.findOne({$and: [{"hobbies.title": "Sports"}, {"hobbies.frequency": {$gte: 3}}]})`
+    - `db.users.find({hobbies: {$elemMatch: {title: "Sports", frequency: {$gte: 3}}}})`
 
 ---
 

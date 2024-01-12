@@ -126,6 +126,15 @@ j stands for journal which is an additional file that Storage Engine manages whi
     - `db.movies.find({runtime: {$not: {$eq: 60}}})` - Return movies where runtime is not equal to 60.
     - `db.movies.find({runtime: {$ne: 60}})` - Return movies where runtime is not equal to 60. Same as above.
 
+- Element Operators - 
+    - `db.users.find({age: {$exists: true}})`
+    - `db.users.find({age: {$exists: true, $gte: 30}})`
+    - `db.users.find({age: {$exists: true, $ne: null}})` - "Age" field exists and the value is not null. 
+    - `db.users.find({phone: {$type: "number"}})`
+    - `db.users.find({phone: {$type: ["double", "string"]}})`
+
+
+
 ---
 
 ## References

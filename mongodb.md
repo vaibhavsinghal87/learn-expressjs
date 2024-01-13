@@ -193,6 +193,14 @@ j stands for journal which is an additional file that Storage Engine manages whi
     - -1 removes from top
 - `db.users.updateOne({name: "Maria"}, {$addToSet: {hobbies: {title: "Hiking", frequency: 2}}})` - _$addToSet_ can also be used to add element to array. Unlike _$push_, _$addToSet_ adds unique values only.
 
+---
+
+## Delete Operations - 
+- `db.users.deleteOne({name: "Chris"})`
+- `db.users.deleteMany({totalAge: {$exists: false}, isSporty: true})`
+- `db.users.deleteMany({})`
+- `db.users.drop()` - Deletes entire collection
+- `db.dropDatabse()` - Deletes current databse
 
 ---
 

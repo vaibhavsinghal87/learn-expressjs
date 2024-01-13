@@ -165,6 +165,37 @@ j stands for journal which is an additional file that Storage Engine manages whi
 
 ---
 
+## Update Operations - 
+
+- `db.users.updateOne({_id: ObjectId("65a02ca096a275dfded933d9")}, {$set: {hobbies: [{title: "Sports", frequency: 5}, {title: "Cooking", frequency: 3}, {title: "Hiking", frequency: 1}]}})`
+- `db.users.updateMany({"hobbies.title": "Sports"}, {$set: {isSporty: true}})` - Add "isSporty" field to all documents that have "hobbies.title" as "Sports"
+- `db.users.updateOne({name: "Manuel"}, {$inc: {age: 1}})` - increment "age" by 1.
+- `db.users.updateOne({name: "Manuel"}, {$inc: {age: -1}})` - _$inc_ can also be used to decrement age.
+- `db.users.updateOne({name: "Manuel"}, {$inc: {age: 1}, $set: {isSporty: false}})` - _$inc_ and _$set_ can also be used together.
+- `db.users.updateOne({name: "Manuel"}, {$inc: {age: 1}, $set: {age: 30}})` - MongoServerError: Updating the path 'age' would create a conflict at 'age'
+- `db.users.updateOne({name: "Chris"}, {$min: {age: 25}})` - _$min_ sets the value only if new value is lower than existing value
+- `db.users.updateOne({name: "Chris"}, {$min: {age: 30}})` - "age" will only change if new value(30) being set is lower than "Chris current age in DB"
+- `db.users.updateOne({name: "Chris"}, {$max: {age: 50}})`
+- `db.users.updateOne({name: "Chris"}, {$mul: {age: 1.1}})` - _$mul_ will multiply age by 1.1.
+- `db.users.updateMany({isSporty: true}, {$set: {phone: null}})` - Sets "phone" to null. Field still remains in the document.
+- `db.users.updateMany({isSporty: true}, {$unset: {phone: ""}})` - Get rid of "phone" field.
+- `db.users.updateMany({}, {$rename: {age: "totalAge"}})` - Rename "age" field to "totalAge" for all documents
+- `db.users.updateOne({name: "Maria"}, {$set: {age: 29, hobbies: [{title: "Good food", frequency: 3}], isSporty: true}}, {upsert: true})` - Inserts document if it doesn't exists already
+- `db.users.updateMany({hobbies: {$elemMatch: {title: "Sports", frequency: {$gt: 3}}}}, {$set: {"hobbies.$.highFrequency": true}})` - Update matched array elements
+- `db.users.updateMany({totalAge: {$gt: 30}}, {$inc: {"hobbies.$[].frequency": -1}})` - Update all documents by using _$[]_
+- `db.users.updateMany({"hobbies.frequency": {$gt: 2}}, {$set: {"hobbies.$[el].goodFrequency": true}}, {arrayFilters: [{"el.frequency": {$gt: 2}}]})` - Filtering out elements in an array that should get modified
+    - first param filters documents
+    - second param is the modification that needs to be done
+    - third param filters Array elements
+- `db.users.updateOne({name: "Maria"}, {$push: {hobbies: {title: "Sports", frequency: 2}}})` - push in hobbies array of filtered elements
+- ` db.users.updateOne({name: "Chris"}, {$pop: {hobbies: 1}})` - Removes element from array.
+    - 1 removes from bottom
+    - -1 removes from top
+- `db.users.updateOne({name: "Maria"}, {$addToSet: {hobbies: {title: "Hiking", frequency: 2}}})` - _$addToSet_ can also be used to add element to array. Unlike _$push_, _$addToSet_ adds unique values only.
+
+
+---
+
 ## References
 - [MongoDB Documentation](https://www.mongodb.com/docs/)
 - [MongoDB Drivers](https://www.mongodb.com/docs/drivers/)

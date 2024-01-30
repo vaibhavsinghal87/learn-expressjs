@@ -204,6 +204,24 @@ j stands for journal which is an additional file that Storage Engine manages whi
 
 ---
 
+## Indexes - 
+
+![MongoDB Cursor](./images/mongodb-indexes.png)  
+
+- `db.contacts.explain().find({"dob.age": {$gt: 60}})` - _explain_ helps in analysing the query
+- `db.contacts.createIndex({"dob.age": 1})` - Creates an index for age field in ascending order
+- `db.contacts.dropIndex({"dob.age": 1})` - Drop the index
+- `db.contacts.createIndex({"dob.age": 1, gender: 1})` - Creates a Compund Index.
+- `db.contacts.getIndexes()` - Returns all indexes on a collection
+- `db.contacts.createIndex({email: 1}, {unique: true})`
+
+
+Index can speed up find, update or delete queries.  
+If you have queries that regularly return all of the documents, an index might not really help there, it might even slow down the execution. This is a limitation of using index.  
+Compound Index, Partial Index
+
+---
+
 ## References
 - [MongoDB Documentation](https://www.mongodb.com/docs/)
 - [MongoDB Drivers](https://www.mongodb.com/docs/drivers/)
